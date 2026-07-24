@@ -1,15 +1,18 @@
 from fastapi import APIRouter
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/resume",
+    tags=["Resume"]
+)
 
-@router.get("/resume")
+@router.get("/")
 def get_resume():
     return {
         "message": "Resume Router Working"
     }
 
-@router.get("/health")
-def get_health():
+@router.get("/upload")
+def upload_resume():
     return {
-        "status": "API Running"
+        "message": "Resume Uploaded Successfully"
     }
