@@ -1,5 +1,16 @@
+from prompts.resume_prompt import RESUME_PROMPT
+from provider.llm_provider import generate
 
+def analyze_text(text: str):
 
-def analyze_resume(text: str, prompt: str):
+    final_prompt = f"""
+        {RESUME_PROMPT}
 
-    pass
+        Resume:
+
+        {text}
+    """
+
+    response = generate(final_prompt)
+
+    return response
