@@ -1,6 +1,6 @@
 import shutil
 
-def save_file(file):
+def save_file(file) -> str:
 
     file_path = f"uploads/{file.filename}"
 
