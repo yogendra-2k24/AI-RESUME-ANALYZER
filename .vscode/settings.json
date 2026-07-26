@@ -1,0 +1,5 @@
+{
+    "mypy.runUsingActiveInterpreter": true,
+    "mypy.debugLogging": true,
+    "mypy.checkNotebooks": true
+}

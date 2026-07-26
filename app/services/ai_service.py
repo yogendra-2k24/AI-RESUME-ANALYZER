@@ -1,7 +1,8 @@
 from prompts.resume_prompt import RESUME_PROMPT
 from provider.llm_provider import generate
+from app.schemas.resume_analysis import ResumeAnalysis
 
-def analyze_text(text: str):
+def analyze_text(text: str) -> ResumeAnalysis:
 
     final_prompt = f"""
         {RESUME_PROMPT}
@@ -11,6 +12,6 @@ def analyze_text(text: str):
         {text}
     """
 
-    response = generate(final_prompt)
+    analysis = generate(final_prompt)
 
-    return response
+    return analysis

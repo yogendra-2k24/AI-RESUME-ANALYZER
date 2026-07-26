@@ -1,6 +1,7 @@
-from fastapi import APIRouter, UploadFile, File
-import shutil
-from app.services.resume_service import upload_resume_service
+from fastapi import APIRouter, UploadFile
+
+from app.services.resume_service import analyze_resume
+from app.schemas.resume_analysis import ResumeAnalysis
 
 # defining router with prefix and tags
 
@@ -11,7 +12,7 @@ router = APIRouter(
 
 # assigning router for resume upload
 
-@router.post("/upload")
-def upload_resume(file: UploadFile=File(...)):
+@router.post("/analyze")
+def analyze_resume_endpoint(file: UploadFile) -> ResumeAnalysis:
 
-    return upload_resume_service(file)
+    return analyze_resume(file)
