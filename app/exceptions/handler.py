@@ -1,16 +1,17 @@
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
-#from app.exceptions.custom_exceptions import AppException
+from app.exceptions.custom_exceptions import AppException
 
-async def value_error_handler(
+async def app_exception_handler(
         request: Request,
-        exc: ValueError
+        exc: AppException
 ):
     return JSONResponse(
         status_code=400,
         content={
             "success": False,
-            "message": str(exc),
+            "message": exc.message,
+            "error_code": exc.error_code,
         },
     )
