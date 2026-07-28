@@ -10,6 +10,6 @@ formatter = logging.Formatter(
     "%(asctime)s - %(levelname)s - %(message)s"
 )
 
-handler.setStream(formatter)
+handler.setFormatter(formatter)
 
 logger.addHandler(handler)

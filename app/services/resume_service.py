@@ -11,25 +11,25 @@ from app.core.logger import logger
 
 def analyze_resume(file: UploadFile) -> ResumeAnalysis:
 
-    logger.info(f"Resume analysis started for {file.filename}")
+    logger.info(f"Resume analysis started for '{file.filename}'")
 
     validate_file(file)
 
-    logger.info(f"File validation successfull for {file.filename}")
+    logger.info(f"File validation successfull for '{file.filename}'")
 
     file_path = save_file(file)
 
-    logger.info(f"File {file.filname} saved successfully")
+    logger.info(f"File '{file.filename}' saved successfully")
 
     text = extract_text(file_path)
 
-    logger.info(f"PDF text extracted successfully from {file.filename}")
+    logger.info(f"PDF text extracted successfully from '{file.filename}'")
 
-    logger.info(f"Starting resume analysis using Gemini for {file.filename}")
+    logger.info(f"Starting resume analysis using Gemini for '{file.filename}'")
 
     analysis = analyze_text(text)
 
-    logger.info(f"Resume analysis completed successfully for {file.filename}")
+    logger.info(f"Resume analysis completed successfully for '{file.filename}'")
 
     return analysis
     
