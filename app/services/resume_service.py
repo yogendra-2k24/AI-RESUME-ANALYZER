@@ -4,10 +4,13 @@ from app.services.pdf_service import extract_text
 from app.services.storage_service import save_file
 from app.services.ai_service import analyze_text
 from app.schemas.resume_analysis import ResumeAnalysis
+from app.validators.file_validator import validate_file
 
 # building service for resume upload router
 
 def analyze_resume(file: UploadFile) -> ResumeAnalysis:
+
+    validate_file(file)
 
     file_path = save_file(file)
 

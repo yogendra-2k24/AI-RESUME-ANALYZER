@@ -1,5 +1,6 @@
 from fastapi import UploadFile
 from pathlib import Path
+#from app.exceptions.custom_exceptions import InvalidFileTypeException
 
 ALLOWED_EXTENSIONS = {
     ".pdf",
@@ -18,3 +19,5 @@ def validate_file(file: UploadFile) -> None:
 
     if file.content_type not in ALLOWED_CONTENT_TYPES:
         raise ValueError("Invalid contenet type")
+
+    return
