@@ -1,7 +1,7 @@
 import json
 import os
 
-from openai import OpenAI
+from google import genai
 from dotenv import load_dotenv
 from pydantic import ValidationError
 
@@ -9,34 +9,27 @@ from app.schemas.resume_analysis import ResumeAnalysis
 
 load_dotenv()
 
-api_key = os.getenv("OPEN_API_KEY")
+api_key = os.getenv("GEMINI_API_KEY")
 
-client = OpenAI(
+client = genai.Client(
     api_key=api_key
 )
 
 def generate(final_prompt: str) -> ResumeAnalysis:
 
-    try:
 
-        response = client.responses.create(
-            model="gpt-5.5",
-            input=final_prompt
-        )
+    response = client.models.generate_content(
+        model="gemini-3.6-flash",
+        contents=final_prompt,
+    config={
+        "response_mime_type": "application/json"
+    }
+    )
 
-        json_text = response.output_text
+    json_text = response.text
 
-        data = json.loads(json_text)
+    data = json.loads(json_text)
 
-        analysis = ResumeAnalysis(**data)
+    analysis = ResumeAnalysis(**data)
 
-        return analysis
-
-    except json.JSONDecodeError:
-        raise
-
-    except ValidationError:
-        raise
-
-    except Exception:
-        raise
+    return analysis
