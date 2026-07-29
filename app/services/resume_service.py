@@ -34,9 +34,9 @@ def analyze_resume(file: UploadFile, db: Session) -> ResumeAnalysis:
     analysis_db = ResumeAnalysis(
         filename=file.filename,
         file_path=file_path,
-        ats_score=analysis["ats_score"],
-        missing_skills=analysis["missing_skills"],
-        suggestions=analysis["suggestions"],
+        ats_score=analysis.ats_score,
+        missing_skills=analysis.missing_skills,
+        suggestions=analysis.suggestions,
     )
     try:
         db.add(analysis_db)
