@@ -5,6 +5,7 @@ from app.schemas.resume_analysis import ResumeAnalysis
 from app.schemas.response import SuccessResponse
 from app.database.database import Session, get_db
 from app.services.resume_history import get_resume_history
+from app.schemas.resume_schema import ResumeHistoryResponse
 
 # defining router with prefix and tags
 
@@ -22,7 +23,7 @@ def analyze_resume_endpoint(file: UploadFile, db: Session = Depends(get_db)) -> 
 
     return SuccessResponse[ResumeAnalysis](data=result)
 
-@router.get("/history")
+@router.get("/history", response_model=list[ResumeHistoryResponse])
 def resume_history(db: Session = Depends(get_db)):
 
     return get_resume_history(db)
