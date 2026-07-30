@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, Depends
+from fastapi import APIRouter, UploadFile, Depends, Query
 
 from app.services.resume_service import analyze_resume
 from app.schemas.resume_analysis import ResumeAnalysis
@@ -24,6 +24,6 @@ def analyze_resume_endpoint(file: UploadFile, db: Session = Depends(get_db)) -> 
     return SuccessResponse[ResumeAnalysis](data=result)
 
 @router.get("/history", response_model=list[ResumeHistoryResponse])
-def resume_history(db: Session = Depends(get_db)):
+def resume_history(limit: int = Query(default=10, ge=1, le=100), offset: int = Query(default=0, ge=0), db: Session = Depends(get_db)):
 
-    return get_resume_history(db)
+    return get_resume_history(db, limit, offset)
