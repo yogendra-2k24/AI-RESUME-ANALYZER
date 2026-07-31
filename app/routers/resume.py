@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, Depends, Query
+from fastapi import APIRouter, UploadFile, Depends, Query, HTTPException
 
 from app.services.resume_service import analyze_resume
 from app.schemas.resume_analysis import ResumeAnalysis
@@ -30,10 +30,21 @@ def resume_history(
     offset: int = Query(default=0, ge=0),
     sort_by: SortField = SortField.CREATED_AT,
     order: SortOrder = SortOrder.DESC,
-    min_score: float | None = Query(default=None, ge=0, le=100),
+    min_score: int | None = Query(default=None, ge=0, le=100),
+    max_score: int | None = Query(default=None, ge=0, le=100),
     filename: str | None = Query(default=None),
     db: Session = Depends(get_db)
 ):
+
+    if(
+        min_score is not None
+        and max_score is not None
+        and min_score > max_score
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="min_score cannot be greater than max_score"
+        )
 
     return get_resume_history(
         db,
