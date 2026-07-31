@@ -10,7 +10,8 @@ def get_resume_history(
     offset, 
     sort_by: SortField, 
     order: SortOrder, 
-    min_score: int | None
+    min_score: int | None,
+    filename: str | None
 ):
 
     SORT_FIELD_MAP = {
@@ -29,6 +30,11 @@ def get_resume_history(
 
     if min_score is not None:
         stmt = stmt.where(ResumeAnalysis.ats_score >= min_score)
+
+    if filename is not None:
+        stmt = stmt.where(ResumeAnalysis.filename.ilike(f"%{filename}%"))
+
+    
 
     stmt = (
         stmt

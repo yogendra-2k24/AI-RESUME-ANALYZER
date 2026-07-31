@@ -31,6 +31,7 @@ def resume_history(
     sort_by: SortField = SortField.CREATED_AT,
     order: SortOrder = SortOrder.DESC,
     min_score: float | None = Query(default=None, ge=0, le=100),
+    filename: str | None = Query(default=None),
     db: Session = Depends(get_db)
 ):
 
@@ -40,5 +41,6 @@ def resume_history(
         offset,
         sort_by,
         order,
-        min_score
+        min_score,
+        filename
     )
