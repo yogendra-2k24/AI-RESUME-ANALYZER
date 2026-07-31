@@ -4,7 +4,14 @@ from app.database.models import ResumeAnalysis
 from app.schemas.resume_schema import ResumeHistoryResponse
 from app.enums.resume import SortField, SortOrder
 
-def get_resume_history(db: Session, limit, offset, sort_by: SortField, order: SortOrder):
+def get_resume_history(
+    db: Session,
+    limit,
+    offset, 
+    sort_by: SortField, 
+    order: SortOrder, 
+    min_score: int | None
+):
 
     SORT_FIELD_MAP = {
     SortField.CREATED_AT: ResumeAnalysis.created_at,
@@ -18,8 +25,18 @@ def get_resume_history(db: Session, limit, offset, sort_by: SortField, order: So
     else:
         order_by_clause = column.desc()
 
+    stmt = select(ResumeAnalysis)
 
-    stmt = (select(ResumeAnalysis).order_by(order_by_clause).limit(limit).offset(offset))
+    if min_score is not None:
+        stmt = stmt.where(ResumeAnalysis.ats_score >= min_score)
+
+    stmt = (
+        stmt
+        .order_by(order_by_clause)
+        .limit(limit)
+        .offset(offset)
+    )
+    
     result=db.execute(stmt)
     analyses = result.scalars().all()
 
