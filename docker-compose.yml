@@ -27,4 +27,4 @@ services:
       - .env
 
 volumes:
-  - postgres_data:
+  postgres_data:
