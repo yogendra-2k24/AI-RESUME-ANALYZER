@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: password
 
     ports:
-      -"5432:5432"
+      - "5432:5432"
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -18,7 +18,7 @@ services:
     build: .
 
     ports:
-      -"8000:8000"
+      - "8000:8000"
 
     depends_on:
       - postgres
@@ -26,5 +26,5 @@ services:
     env_file:
       - .env
 
-    volumes:
-      - postgres_data:
+volumes:
+  - postgres_data:
